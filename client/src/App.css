@@ -1,0 +1,139 @@
+/* ======================
+   全局基础
+   ====================== */
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 2rem; /* 顶部 padding ≥ head 高度 */
+  box-sizing: border-box;
+}
+
+/* ======================
+   顶部导航
+   ====================== */
+
+.head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  gap: 2rem;              /* 拉开按钮间距 */
+  justify-content: center;
+
+  padding: 1rem 2rem;
+  background-color: #020617; /* 深色背景，和暗色表格统一 */
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* 默认按钮状态（不抢 Button 自己的风格） */
+.head button {
+  background-color: #1f2937;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  min-width: 120px;       /* 防止文字短时太瘦 */
+  padding: 0.5rem 1.2rem; /* 让按钮更横向 */
+}
+
+/* 当前页面高亮 */
+.head button.highlight {
+  background-color: #374151;
+  color: #ffffff;
+  border-color: #6366f1; /* 保留冷色主调 */
+  font-weight: 600;
+}
+
+
+/* ======================
+   页面容器
+   ====================== */
+
+.page {
+  width: 100%;
+}
+
+/* ======================
+   表格基础样式
+   ====================== */
+
+table {
+  width: 90%;
+  margin: 1rem auto;   /* 水平居中 */
+  border-collapse: collapse;
+  font-size: 14px;
+  background-color: #111827; /* 深色底 */
+}
+
+thead {
+  background-color: #1f2937;
+}
+
+th {
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  color: #e5e7eb;
+  border-bottom: 1px solid #374151;
+}
+
+td {
+  padding: 0.75rem 0.5rem;
+  color: #d1d5db;
+  border-bottom: 1px solid #1f2937;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+tbody tr:hover {
+  background-color: #1f2937;
+}
+
+/* ======================
+   表单元素
+   ====================== */
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #6366f1; /* 保留你原本的冷色系感觉 */
+}
+
+/* ======================
+   隐藏逻辑（页面切换）
+   ====================== */
+
+.hide {
+  display: none;
+}
+
+/* ======================
+   工具类
+   ====================== */
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.muted {
+  color: #6b7280;
+}

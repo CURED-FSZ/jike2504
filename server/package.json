@@ -1,0 +1,22 @@
+{
+  "name": "api.jike2504.cn",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node src/www.ts",
+    "build": "tsc",
+    "start": "node dist/www.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "~5.2.1",
+    "mysql2": "^3.14.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6"
+  }
+}
