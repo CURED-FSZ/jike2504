@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node src/www.ts",
+    "dev": "ts-node src/bin/www.ts",
     "build": "tsc",
-    "start": "node dist/www.js"
+    "start": "node dist/bin/www.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
