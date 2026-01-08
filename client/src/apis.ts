@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.jike2504.cn/api";
+const BASE_URL = "/api";
 
 export type Suggestion_t = {
     id: number;
