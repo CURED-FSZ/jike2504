@@ -20,8 +20,6 @@ export async function getSuggestions(): Promise<Suggestion_t[]> {
         throw new Error("获取建议列表失败");
     }
 
-    console.log(JSON.stringify(res.json()));
-
     const data = await res.json();
     console.log(data);
     return data;
