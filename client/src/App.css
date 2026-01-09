@@ -32,7 +32,21 @@
 }
 
 .foot {
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 12px;
+    color: #9ca3af;
     border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.foot a {
+    color: #9ca3af;
+    text-decoration: none;
+}
+
+.foot a:hover {
+    color: #e5e7eb;
+    text-decoration: underline;
 }
 
 /* 默认按钮状态（不抢 Button 自己的风格） */
