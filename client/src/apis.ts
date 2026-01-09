@@ -75,7 +75,24 @@ export async function deleteSuggestion(id: number): Promise<void> {
     const res = await fetch(`${BASE_URL}/suggestions/${id}`, {
         method: "DELETE",
     });
+
     if (!res.ok) {
-        throw new Error("删除建议失败");
+        let detail: string;
+        try {
+            const data = await res.json();
+            detail = data?.message || JSON.stringify(data);
+        } catch {
+            detail = await res.text();
+        }
+
+        console.error("[deleteSuggestion] failed", {
+            id,
+            status: res.status,
+            detail
+        });
+
+        throw new Error(`删除失败 (${res.status}): ${detail}`);
     }
+
+    console.log("[deleteSuggestion] success", { id });
 }

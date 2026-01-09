@@ -78,18 +78,25 @@ export async function updateAccepted(id: number, status: 0 | 1 | 2, response: st
 }
 
 export async function deleteSuggestionById(id: number): Promise<boolean> {
+    console.log("[SQL deleteSuggestionById] start", { id });
+
     try {
         const [result] = await pool.query<ResultSetHeader>(
             "DELETE FROM suggestions WHERE ID = ?",
             [id]
         );
+
+        console.log("[SQL deleteSuggestionById] result", {
+            id,
+            affectedRows: result.affectedRows
+        });
+
         return result.affectedRows === 1;
     } catch (error) {
-        if (error instanceof Error) {
-            console.error("删除失败：", error.message);
-        } else {
-            console.error("删除失败：", error);
-        }
-        return false;
+        console.error("[SQL deleteSuggestionById] error", {
+            id,
+            error
+        });
+        throw error; // ⚠️ 不要吞异常
     }
 }
