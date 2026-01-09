@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Input, Button, type InputRules } from "../components/components.ts";
-import { createSuggestion } from "../apis.ts"
+import {useState} from "react";
+import {Button, Input, type InputRules} from "../components/components.ts";
+import {createSuggestion} from "../apis.ts"
 
 
 // 输入框验证
 function validate(value: string, rules: InputRules): string {
     const length = Array.from(value).length;
     const isRequired = rules.required ?? false;
-    console.log(value+' '+JSON.stringify( rules)+' '+isRequired);
+    console.log(value + ' ' + JSON.stringify(rules) + ' ' + isRequired);
 
     if (isRequired && !value.trim()) {
         console.log("不能为空");
@@ -26,7 +26,7 @@ function validate(value: string, rules: InputRules): string {
     return "";
 }
 
-function InputSuggestion(props:{className?: string}) {
+function InputSuggestion(props: { className?: string }) {
     const [role, setRole] = useState("");
     const [shortDes, setShortDes] = useState("");
     const [longDes, setLongDes] = useState("");

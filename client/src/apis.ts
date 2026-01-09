@@ -38,7 +38,7 @@ export async function createSuggestion(
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ role, short_des, long_des })
+        body: JSON.stringify({role, short_des, long_des})
     });
 
     if (!res.ok) {
@@ -61,7 +61,7 @@ export async function updateSuggestionAccepted(
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status, response })
+        body: JSON.stringify({status, response})
     });
 
     if (!res.ok) {
@@ -69,4 +69,13 @@ export async function updateSuggestionAccepted(
     }
 
     return res.json();
+}
+
+export async function deleteSuggestion(id: number): Promise<void> {
+    const res = await fetch(`${BASE_URL}/suggestions/${id}`, {
+        method: "DELETE",
+    });
+    if (!res.ok) {
+        throw new Error("删除建议失败");
+    }
 }

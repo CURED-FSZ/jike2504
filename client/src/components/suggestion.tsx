@@ -1,9 +1,9 @@
 import {Input} from './input.tsx'
 
 const STATUS: Record<0 | 1 | 2, { label: string; color: string }> = {
-    0: { label: "待审核", color: "#facc15" },
-    1: { label: "通过",   color: "#22c55e" },
-    2: { label: "未通过", color: "#ef4444" }
+    0: {label: "待审核", color: "#facc15"},
+    1: {label: "通过", color: "#22c55e"},
+    2: {label: "未通过", color: "#ef4444"}
 };
 
 export type SuggestionProps = {
@@ -17,7 +17,17 @@ export type SuggestionProps = {
     time: string;
     onStatusChange?: (id: number, status: 0 | 1 | 2) => void;
     onResponseChange?: (id: number, response: string) => void;
+    onDelete?: (id: number) => void;
 };
+
+function formatTime(iso: string): string {
+    const d = new Date(iso);
+
+    const pad = (n: number) => n.toString().padStart(2, "0");
+
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} `
+        + `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
 
 export function Suggestion(props: SuggestionProps) {
     const statusUI = STATUS[props.status];
@@ -28,7 +38,7 @@ export function Suggestion(props: SuggestionProps) {
             <td>{props.role}</td>
             <td>{props.short_des}</td>
             <td>{props.long_des}</td>
-            <td>{props.time}</td>
+            <td>{formatTime(props.time)}</td>
             <td>
                 {props.isEdit ? (
                     <select
@@ -44,7 +54,7 @@ export function Suggestion(props: SuggestionProps) {
                         ))}
                     </select>
                 ) : (
-                    <span style={{ color: statusUI.color, fontWeight: 600 }}>
+                    <span style={{color: statusUI.color, fontWeight: 600}}>
                         {statusUI.label}
                     </span>
                 )}
@@ -62,6 +72,23 @@ export function Suggestion(props: SuggestionProps) {
                     props.response
                 )}
             </td>
+            {props.isEdit && (
+                <td>
+                    <button
+                        style={{
+                            background: "#ef4444",
+                            color: "#fff",
+                            border: "none",
+                            padding: "4px 10px",
+                            borderRadius: "4px",
+                            cursor: "pointer"
+                        }}
+                        onClick={() => props.onDelete?.(props.id)}
+                    >
+                        删除
+                    </button>
+                </td>
+            )}
         </tr>
     );
 }

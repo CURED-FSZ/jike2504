@@ -15,7 +15,8 @@ function App() {
             <div className="head">
                 <Button text="主页" className={page === "show" ? "highlight" : ""} click={() => setPage("show")}/>
                 <Button text="提交建议" className={page === "input" ? "highlight" : ""} click={() => setPage("input")}/>
-                <Button text="审核建议" className={page === "review" ? "highlight" : ""} click={() => setPage("review")}/>
+                <Button text="审核建议" className={page === "review" ? "highlight" : ""}
+                        click={() => setPage("review")}/>
             </div>
 
             <div className={`${page === "show" ? "" : "hide"}`}>

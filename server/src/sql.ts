@@ -76,3 +76,20 @@ export async function updateAccepted(id: number, status: 0 | 1 | 2, response: st
         return false;
     }
 }
+
+export async function deleteSuggestionById(id: number): Promise<boolean> {
+    try {
+        const [result] = await pool.query<ResultSetHeader>(
+            "DELETE FROM suggestions WHERE ID = ?",
+            [id]
+        );
+        return result.affectedRows === 1;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error("删除失败：", error.message);
+        } else {
+            console.error("删除失败：", error);
+        }
+        return false;
+    }
+}

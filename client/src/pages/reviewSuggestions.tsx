@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import {getSuggestions, type Suggestion_t, updateSuggestionAccepted} from "../apis.ts";
+import {getSuggestions, type Suggestion_t, updateSuggestionAccepted, deleteSuggestion} from "../apis.ts";
 import {Button} from "../components/Button.tsx";
 import {Suggestion} from "../components/components.ts";
 
@@ -7,6 +7,18 @@ type EditingState = {
     status: 0 | 1 | 2;
     response: string;
 };
+
+const REVIEW_ORDER: Record<0 | 1 | 2, number> = {
+    0: 0, // 待审核
+    1: 1, // 通过
+    2: 2  // 未通过
+};
+
+function sortForReview(a: Suggestion_t, b: Suggestion_t) {
+    const s = REVIEW_ORDER[a.status] - REVIEW_ORDER[b.status];
+    if (s !== 0) return s;
+    return +new Date(b.time) - +new Date(a.time);
+}
 
 function isModified(
     origin: Suggestion_t,
@@ -18,12 +30,14 @@ function isModified(
     );
 }
 
-function ReviewSuggestions(props:{className?: string}) {
+function ReviewSuggestions(props: { className?: string }) {
     const [suggestions, setSuggestions] = useState<Suggestion_t[]>([]);
     const [editing, setEditing] = useState<Record<number, EditingState>>({});
     const [authorized, setAuthorized] = useState(false);
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+
+    const sorted = [...suggestions].sort(sortForReview);
 
     const loadSuggestions = useCallback(() => {
         getSuggestions().then(data => {
@@ -38,10 +52,10 @@ function ReviewSuggestions(props:{className?: string}) {
                 };
             });
             setEditing(prev => {
-                const next = { ...prev };
+                const next = {...prev};
                 data.forEach(s => {
                     if (!next[s.id]) {
-                        next[s.id] = { status: s.status, response: s.response };
+                        next[s.id] = {status: s.status, response: s.response};
                     }
                 });
                 return next;
@@ -52,7 +66,6 @@ function ReviewSuggestions(props:{className?: string}) {
     useEffect(() => {
         loadSuggestions();
     }, [loadSuggestions]);
-
     const checkPassword = () => {
         if (password === "35090611") {
             setAuthorized(true);
@@ -60,8 +73,7 @@ function ReviewSuggestions(props:{className?: string}) {
         } else {
             setPasswordError("密码错误");
         }
-    };
-
+    }
     const onStatusChange = (id: number, status: 0 | 1 | 2) => {
         setEditing(prev => ({
             ...prev,
@@ -71,7 +83,6 @@ function ReviewSuggestions(props:{className?: string}) {
             }
         }));
     };
-
     const onResponseChange = (id: number, response: string) => {
         setEditing(prev => ({
             ...prev,
@@ -81,7 +92,25 @@ function ReviewSuggestions(props:{className?: string}) {
             }
         }));
     };
+    const onDelete = async (id: number) => {
+        const ok = window.confirm("确认要删除这条建议吗？删除后无法恢复。");
+        if (!ok) return;
 
+        try {
+            await deleteSuggestion(id);
+
+            // 本地立即移除（不用等刷新）
+            setSuggestions(prev => prev.filter(s => s.id !== id));
+            setEditing(prev => {
+                const next = {...prev};
+                delete next[id];
+                return next;
+            });
+        } catch (err) {
+            console.error(err);
+            alert("删除失败");
+        }
+    };
     const submitAll = async () => {
         const tasks = suggestions
             .filter(s => {
@@ -132,7 +161,7 @@ function ReviewSuggestions(props:{className?: string}) {
                             boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
                         }}
                     >
-                        <h3 style={{ marginBottom: "1rem" }}>审核入口</h3>
+                        <h3 style={{marginBottom: "1rem"}}>审核入口</h3>
                         输入密码，或者利用您自己的手段绕过。
                         <input
                             type="password"
@@ -152,19 +181,19 @@ function ReviewSuggestions(props:{className?: string}) {
                         />
 
                         {passwordError && (
-                            <div style={{ color: "red", marginBottom: "0.5rem" }}>
+                            <div style={{color: "red", marginBottom: "0.5rem"}}>
                                 {passwordError}
                             </div>
                         )}
 
-                        <Button text="确认" click={checkPassword} />
+                        <Button text="确认" click={checkPassword}/>
                     </div>
                 </div>
             )}
 
-            <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-                <Button text="刷新" click={loadSuggestions} />
-                <Button text="提交所有修改" click={submitAll} />
+            <div style={{display: "flex", gap: "1rem", marginBottom: "1rem"}}>
+                <Button text="刷新" click={loadSuggestions}/>
+                <Button text="提交所有修改" click={submitAll}/>
             </div>
 
             <table>
@@ -177,11 +206,12 @@ function ReviewSuggestions(props:{className?: string}) {
                     <th>时间</th>
                     <th>状态</th>
                     <th>回复</th>
+                    <th>删除</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {suggestions.map(s => {
+                {sorted.map(s => {
                     const edit = editing[s.id];
                     if (!edit) return null;
 
@@ -197,6 +227,7 @@ function ReviewSuggestions(props:{className?: string}) {
                         isEdit={true}
                         onStatusChange={onStatusChange}
                         onResponseChange={onResponseChange}
+                        onDelete={onDelete}
                     />
                 })}
                 </tbody>

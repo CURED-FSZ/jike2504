@@ -1,7 +1,7 @@
-export { Input } from "./input";
-export type { InputRules } from "./input";
+export {Input} from "./input";
+export type {InputRules} from "./input";
 
-export { Button } from "./Button";
+export {Button} from "./Button";
 
-export { Suggestion } from "./suggestion";
-export type { SuggestionProps } from "./suggestion";
+export {Suggestion} from "./suggestion";
+export type {SuggestionProps} from "./suggestion";
