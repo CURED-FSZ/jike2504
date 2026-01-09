@@ -68,20 +68,68 @@ function InputSuggestion(props: { className?: string }) {
     }
 
     return (
-        <div className={props.className}>
-            称呼(可留空)：
-            <Input alert="" value={role} onChange={setRole} error={roleError}/>
-
-            标题：
-            <Input alert="在此输入..." value={shortDes} onChange={setShortDes} error={shortDesError}/>
-
-            详细描述：
-            <Input alert="在此输入..." value={longDes} onChange={setLongDes} error={longDesError}/>
-
-            <div>
-                <Button text="重置" click={reset}/> <Button text="确认提交" click={submit}/>
+        <div
+            className={props.className}
+            style={{
+                maxWidth: "720px",
+                margin: "0 auto",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1.2rem",
+                padding: "1.5rem"
+            }}
+        >
+            {/* 称呼 */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                <label style={{ fontSize: "0.9rem", opacity: 0.85 }}>
+                    称呼（可留空）
+                </label>
+                <Input
+                    alert=""
+                    value={role}
+                    onChange={setRole}
+                    error={roleError}
+                />
             </div>
 
+            {/* 标题 */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                <label style={{ fontSize: "0.9rem", opacity: 0.85 }}>
+                    标题
+                </label>
+                <Input
+                    alert="在此输入..."
+                    value={shortDes}
+                    onChange={setShortDes}
+                    error={shortDesError}
+                />
+            </div>
+
+            {/* 详细描述 */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                <label style={{ fontSize: "0.9rem", opacity: 0.85 }}>
+                    详细描述
+                </label>
+                <Input
+                    alert="在此输入..."
+                    value={longDes}
+                    onChange={setLongDes}
+                    error={longDesError}
+                />
+            </div>
+
+            {/* 按钮区 */}
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: "0.8rem",
+                    marginTop: "1rem"
+                }}
+            >
+                <Button text="重置" click={reset} />
+                <Button text="确认提交" click={submit} />
+            </div>
         </div>
     )
 }
