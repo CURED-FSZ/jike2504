@@ -31,6 +31,11 @@
     border-bottom: 1px solid #2a2a2a;
 }
 
+.main {
+    flex: 1;                 /* 吃掉中间所有空间 */
+    padding-top: 5rem;       /* 给 fixed head 让位 */
+}
+
 .foot {
     text-align: center;
     padding: 1rem 0;

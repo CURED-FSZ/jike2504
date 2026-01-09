@@ -18,18 +18,19 @@ function App() {
                 <Button text="审核建议" className={page === "review" ? "highlight" : ""}
                         click={() => setPage("review")}/>
             </div>
+            <main className="main">
+                <div className={page === "show" ? "" : "hide"}>
+                    <ShowSuggestions/>
+                </div>
 
-            <div className={`${page === "show" ? "" : "hide"}`}>
-                <ShowSuggestions/>
-            </div>
+                <div className={page === "input" ? "" : "hide"}>
+                    <InputSuggestion/>
+                </div>
 
-            <div className={`${page === "input" ? "" : "hide"}`}>
-                <InputSuggestion/>
-            </div>
-
-            <div className={`${page === "review" ? "" : "hide"}`}>
-                <ReviewSuggestions/>
-            </div>
+                <div className={page === "review" ? "" : "hide"}>
+                    <ReviewSuggestions/>
+                </div>
+            </main>
             <div
                 className="foot"
                 style={{
