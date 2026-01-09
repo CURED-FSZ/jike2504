@@ -71,6 +71,10 @@
     font-weight: 600;
 }
 
+button:focus {
+    outline: none;  /* ✅ 移除边框 */
+}
+
 
 /* ======================
    页面容器
