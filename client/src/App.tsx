@@ -30,6 +30,16 @@ function App() {
             <div className={`${page === "review" ? "" : "hide"}`}>
                 <ReviewSuggestions/>
             </div>
+            <div className="foot">
+                <a
+                    href="https://beian.miit.gov.cn/"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: "#9ca3af", textDecoration: "none" }}
+                >
+                    陕ICP备2025079968号
+                </a>
+            </div>
         </>
     );
 }
