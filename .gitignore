@@ -22,3 +22,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# node
+node_modules/
+
+# build output
+dist/
+*.js
+*.js.map
+
+# server build output
+server/src/**/*.js
+
+# env / runtime
+.env
+.htaccess
+.well-known/
+.user.ini
