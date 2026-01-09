@@ -52,7 +52,7 @@ function InputSuggestion(props: { className?: string }) {
         setLongDes("");
     };
 
-    const submit = () => {
+    const submit = async () => {
         const roleErr = validate(role, roleRules);
         const shortErr = validate(shortDes, shortDesRules);
         const longErr = validate(longDes, longDesRules);
@@ -64,8 +64,22 @@ function InputSuggestion(props: { className?: string }) {
         if (roleErr || shortErr || longErr) {
             return;
         }
-        createSuggestion(role, shortDes, longDes).then();
-    }
+
+        try {
+            const ok = await createSuggestion(role, shortDes, longDes);
+
+            if (ok) {
+                alert("提交成功，感谢你的建议！");
+                reset(); // 成功才清空
+            } else {
+                alert("提交失败，请稍后再试");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("提交失败，请检查网络或稍后再试");
+        }
+    };
+
 
     return (
         <div
